@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameOfRPG.BL.Model
 {
+
     /// <summary>
     /// Герой.
     /// </summary>
+    [Serializable]
     public class Hero
     {
         /// <summary>
@@ -18,11 +20,11 @@ namespace GameOfRPG.BL.Model
         /// <summary>
         /// Пол героя.
         /// </summary>
-        public Gender Gender { get; }
+        public Gender Gender { get; set; }
         /// <summary>
         /// Дата рождение героя.
         /// </summary>
-        public DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
         /// <summary>
         /// Вес.
         /// </summary>
@@ -77,9 +79,17 @@ namespace GameOfRPG.BL.Model
             Height = height;
             ClassHero = classHero;
         }
+        public Hero(string name)
+        {
+            if(string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Name faaail", nameof(name));
+            }
+            Name = name;
+        }
         public override string ToString()
         {
-            return Name + " - " + ClassHero;
+            return Name + " - " + ClassHero.Weapon.Name;
         }
     }
 }

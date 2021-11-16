@@ -9,6 +9,7 @@ namespace GameOfRPG.BL.Model
     /// <summary>
     /// Оружие.
     /// </summary>
+    [Serializable]
     public class Weapon
     {
         /// <summary>

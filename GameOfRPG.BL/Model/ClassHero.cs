@@ -9,6 +9,8 @@ namespace GameOfRPG.BL.Model
     /// <summary>
     /// Класс героя.
     /// </summary>
+
+    [Serializable]
     public class ClassHero
     {
         /// <summary>

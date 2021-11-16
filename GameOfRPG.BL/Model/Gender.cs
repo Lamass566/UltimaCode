@@ -9,6 +9,7 @@ namespace GameOfRPG.BL.Model
     /// <summary>
     /// Пол.
     /// </summary>
+    [Serializable]
     public class Gender
     {
         /// <summary>
