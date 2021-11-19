@@ -24,7 +24,7 @@ namespace GameOfRPG.BL.Model
         {
             if(string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Name is can't be a null or empty!!!", nameof(name));
+                throw new ArgumentNullException("Имя не может быть null или пустым!!!", nameof(name));
             }
 
             Name = name;

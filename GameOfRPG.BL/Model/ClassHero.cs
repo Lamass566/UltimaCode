@@ -35,15 +35,15 @@ namespace GameOfRPG.BL.Model
         {
             if(string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Name is can't be a null or empty!!!", nameof(name));
+                throw new ArgumentNullException("Имя не может быть пустым null!!!", nameof(name));
             }
             if(hp <= 0)
             {
-                throw new ArgumentException("HP can't be a below 0!!!", nameof(hp));
+                throw new ArgumentException("HP не может быть меньше 0", nameof(hp));
             }
             if(weapon == null)
             {
-                throw new ArgumentNullException("Weapon is can't be a null!!!", nameof(weapon));
+                throw new ArgumentNullException("Оружие не может быть null!", nameof(weapon));
             }
 
             Name = name;

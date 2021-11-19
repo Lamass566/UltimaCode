@@ -1,4 +1,5 @@
-﻿using GameOfRPG.BL.Controller;
+﻿using GameOfRPG.BL;
+using GameOfRPG.BL.Controller;
 using System;
 
 namespace GameOfRPG.CMD
@@ -7,43 +8,40 @@ namespace GameOfRPG.CMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, you are welcome!");
+            ParseHelper parseHelper = new ParseHelper();
 
-            Console.WriteLine("Enter name hero!");
+            Console.WriteLine("Привет, это Ultima!");
+
+            Console.Write("Введите имя героя: ");
             var name = Console.ReadLine();
-
-            //Console.WriteLine("Enter Gender hero!");
-            //var gender = Console.ReadLine();
-
-            //Console.WriteLine("Enter BirthDay hero!");
-            //var birthD = DateTime.Parse(Console.ReadLine());
-
-            //Console.WriteLine("Enter Weight hero!");
-            //var Weight = double.Parse(Console.ReadLine());
-
-            //Console.WriteLine("Enter Height hero!");
-            //var Height = double.Parse(Console.ReadLine());
 
             var heroContr2 = new HeroController(name);
 
             if(heroContr2.IsNewUser)
             {
-                Console.WriteLine("Enter Gender hero!");
+                Console.Write("Введите Пол: ");
                 var gender = Console.ReadLine();
 
-                Console.WriteLine("Enter BirthDay hero!");
-                var birthD = DateTime.Parse(Console.ReadLine());
+                var age = parseHelper.ParseInt("Возраст");
+                var Weight = parseHelper.ParseDouble("Вес");
+                var Height = parseHelper.ParseDouble("Рост");
 
-                Console.WriteLine("Enter Weight hero!");
-                var Weight = double.Parse(Console.ReadLine());
+                Console.WriteLine("----------------------------");
+                Console.Write("Введите Оружие: ");
+                var nameWeapon = Console.ReadLine();
 
-                Console.WriteLine("Enter Height hero!");
-                var Height = double.Parse(Console.ReadLine());
+                var dm = parseHelper.ParseInt("Урон");
 
-                heroContr2.SetNewHeroData(gender, birthD, Weight, Height);
+                Console.Write("Введите Класс: ");
+                var nameClass = Console.ReadLine();
+
+                var HP = parseHelper.ParseInt("HP");
+
+                heroContr2.SomeClasses(nameWeapon, dm, nameClass, HP);
+                heroContr2.SetNewHeroData(gender, age, Weight, Height);
             }
 
-             Console.WriteLine(heroContr2.CurrentHero);
+            Console.WriteLine(heroContr2.CurrentHero);
             Console.ReadLine();
         }
     }

@@ -33,11 +33,10 @@ namespace GameOfRPG.BL.Controller
                 Save();
             }
         }
-        public void SetNewHeroData(string genderName, DateTime birthDay, double weight = 1, double height = 1)
+        public void SetNewHeroData(string genderName, int age, double weight = 1, double height = 1)
         {
-            SomeClasses();
             CurrentHero.Gender = new Gender(genderName);
-            CurrentHero.BirthDate = birthDay;
+            CurrentHero.Age = age;
             CurrentHero.Weight = weight;
             CurrentHero.Height = height;
             Save();
@@ -52,7 +51,7 @@ namespace GameOfRPG.BL.Controller
 
             using (var fs = new FileStream("heroes.dat", FileMode.OpenOrCreate))
             {
-                if (formater.Deserialize(fs) is List<Hero> hero)
+                if (fs.Length > 0 && formater.Deserialize(fs) is List<Hero> hero)
                 {
                     return hero;
                 }
@@ -62,24 +61,14 @@ namespace GameOfRPG.BL.Controller
                 }
             }
         }
-        private void SomeClasses()
+        public void SomeClasses(string name, int dm, string nameClass, int HP)
         {
-            Console.Write("Enter Weapon: ");
-            var name = Console.ReadLine();
-
-            Console.Write("Enter Damage: ");
-            var dm = int.Parse(Console.ReadLine());
             Weapon = new Weapon(name, dm);
-
-            Console.Write("Enter Class: ");
-            var nameW = Console.ReadLine();
-
-            Console.Write("Enter HP: ");
-            var HP = int.Parse(Console.ReadLine());
-            ClassHero = new ClassHero(nameW, HP, Weapon);
+            ClassHero = new ClassHero(nameClass, HP, Weapon);
 
             CurrentHero.ClassHero = ClassHero;
             CurrentHero.ClassHero.Weapon = Weapon;
+            Save();
         }
         /// <summary>
         /// Save data hero.

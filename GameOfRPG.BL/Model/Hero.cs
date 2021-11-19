@@ -22,9 +22,9 @@ namespace GameOfRPG.BL.Model
         /// </summary>
         public Gender Gender { get; set; }
         /// <summary>
-        /// Дата рождение героя.
+        /// Возраст героя.
         /// </summary>
-        public DateTime BirthDate { get; set; }
+        public int Age { get; set; }
         /// <summary>
         /// Вес.
         /// </summary>
@@ -46,7 +46,7 @@ namespace GameOfRPG.BL.Model
         /// <param name="weight"></param>
         /// <param name="height"></param>
         /// <param name="classHero"></param>
-        public Hero(string name, Gender gender, DateTime dateBirth, double weight, double height, ClassHero classHero)
+        public Hero(string name, Gender gender, int age, double weight, double height, ClassHero classHero)
         {
             if(string.IsNullOrWhiteSpace(name))
             {
@@ -56,9 +56,9 @@ namespace GameOfRPG.BL.Model
             {
                 throw new ArgumentNullException("Gender is can't be a null", nameof(gender));
             }
-            if(dateBirth <= DateTime.Parse("01/01/0001") && dateBirth > DateTime.Now)
+            if(age <= 0)
             {
-                throw new ArgumentException("Date Birth can't be smaller 01/01/0001 or biger Now", nameof(dateBirth));
+                throw new ArgumentException("Age can't be a bellow 0", nameof(age));
             }
             if(weight <= 0)
             {
@@ -74,7 +74,7 @@ namespace GameOfRPG.BL.Model
             }
             Name = name;
             Gender = gender;
-            BirthDate = dateBirth;
+            Age = age;
             Weight = weight;
             Height = height;
             ClassHero = classHero;
@@ -83,7 +83,7 @@ namespace GameOfRPG.BL.Model
         {
             if(string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Name faaail", nameof(name));
+                throw new ArgumentNullException("Имя не может быть пустым или null", nameof(name));
             }
             Name = name;
         }
