@@ -7,8 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GameOfRPG.BL.Controller
 {
-    public class HeroController
+    public class HeroController : ControllerBase
     {
+        private const string HERO_FILE_NAME = "heroes.dat";
         public ClassHero ClassHero { get; set; }
         public bool IsNewUser { get; } = false;
         public Weapon Weapon { get; set; }
@@ -47,19 +48,7 @@ namespace GameOfRPG.BL.Controller
         /// <returns>Данные пользователей или пустой обьект.</returns>
         private List<Hero> GetHerosData()
         {
-            var formater = new BinaryFormatter();
-
-            using (var fs = new FileStream("heroes.dat", FileMode.OpenOrCreate))
-            {
-                if (fs.Length > 0 && formater.Deserialize(fs) is List<Hero> hero)
-                {
-                    return hero;
-                }
-                else
-                {
-                    return new List<Hero>();
-                }
-            }
+            return Load<List<Hero>>(HERO_FILE_NAME) ?? new List<Hero>();
         }
         public void SomeClasses(string name, int dm, string nameClass, int HP)
         {
@@ -75,12 +64,7 @@ namespace GameOfRPG.BL.Controller
         /// </summary>
         public void Save()
         {
-            var formater = new BinaryFormatter();
-
-            using (var fs = new FileStream("heroes.dat", FileMode.OpenOrCreate))
-            {
-                formater.Serialize(fs, Heros);
-            }
+            Save(HERO_FILE_NAME, Heros);
         }
     }
 }
