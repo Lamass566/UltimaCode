@@ -23,6 +23,7 @@ namespace GameOfRPG.CMD
 
             var heroContr2 = new HeroController(name);
             var dict = new DictionarySpellController(heroContr2.CurrentHero);
+            var dung = new DungeonController(heroContr2.CurrentHero);
 
             if(heroContr2.IsNewUser)
             {
@@ -50,22 +51,43 @@ namespace GameOfRPG.CMD
 
             Console.WriteLine(heroContr2.CurrentHero);
 
-            Console.WriteLine("Что вы хотите сделать?");
-            Console.WriteLine("W - ввести заклинания");
-            var key = Console.ReadKey();
 
-            if(key.Key == ConsoleKey.W)
+
+            while (true)
             {
-                var spells = EnterDict();
-                dict.Add(spells.Spell, spells.Quentity);
-
-                foreach(var item in dict.DictionarySpell.Spells)
+                Console.WriteLine("Что вы хотите сделать?");
+                Console.WriteLine("W - ввести заклинания");
+                Console.WriteLine("A - ввести данж");
+                Console.WriteLine("N - выход");
+                var key = Console.ReadKey();
+                switch (key.Key)
                 {
-                    Console.WriteLine($"\t{item.Key.Name} - {item.Value}");
-                }
-            }
+                    case ConsoleKey.W:
+                        var spells = EnterDict();
+                        dict.Add(spells.Spell, spells.Quentity);
 
-            Console.ReadLine();
+                        foreach (var item in dict.DictionarySpell.Spells)
+                        {
+                            Console.WriteLine($"\t{item.Key.Name} - {item.Value}");
+                        }
+                        break;
+
+                    case ConsoleKey.A:
+                        var dan = EnterDungeon();
+                        dung.Add(dan.activity, dan.begin, dan.end, dan.kill);
+
+                        foreach (var item in dung.Dangeons)
+                        {
+                            Console.WriteLine($"\t{item.Activity} - {item.Start.ToShortTimeString()} - {item.Finish.ToShortTimeString()}");
+                        }
+                        break;
+                    case ConsoleKey.N:
+                        Environment.Exit(0);
+                        break;
+                }
+
+                Console.ReadLine();
+            }
         }
 
         private static (Spell Spell, int Quentity) EnterDict()
@@ -87,6 +109,24 @@ namespace GameOfRPG.CMD
             var pr = new Spell(spell, quentity, money, mana, Effect);
 
             return (Spell: pr, Quentity: quentity);
+        }
+        private static (DateTime begin, DateTime end, Activity activity, int kill) EnterDungeon()
+        {
+            ParseHelper parseHelper = new ParseHelper();
+
+            Console.Write("Введите имя данжа: ");
+            var name = Console.ReadLine();
+
+            int kill = 15;
+            int exp = 5;
+            var activity = new Activity(name, exp);
+            Console.Write("Введите Вход данжа: ");
+            var begin = Convert.ToDateTime(Console.ReadLine());
+
+            Console.Write("Введите Выход данжа: ");
+            var end = Convert.ToDateTime(Console.ReadLine());
+
+            return (begin, end, activity, kill);
         }
     }
 }

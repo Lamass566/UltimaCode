@@ -35,7 +35,7 @@ namespace GameOfRPG.BL.Controller.Tests
             dictSpellContr.Add(spell, 3);
 
             //Assert
-            //Assert.AreEqual(spell.Name, dictSpellContr.DictionarySpell.Spells.First().Key.Name);
+            Assert.AreEqual(spell.Name, dictSpellContr.DictionarySpell.Spells.First().Key.Name);
         }
     }
 }
