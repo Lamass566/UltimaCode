@@ -2,6 +2,8 @@
 using GameOfRPG.BL.Controller;
 using GameOfRPG.BL.Model;
 using System;
+using System.Globalization;
+using System.Resources;
 
 namespace GameOfRPG.CMD
 {
@@ -9,11 +11,14 @@ namespace GameOfRPG.CMD
     {
         static void Main(string[] args)
         {
+            var cultura = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("GameOfRPG.CMD.Languages.Message", typeof(Program).Assembly);
+
             ParseHelper parseHelper = new ParseHelper();
 
-            Console.WriteLine("Привет, это Ultima!");
+            Console.WriteLine(resourceManager.GetString("Hello", cultura));
 
-            Console.Write("Введите имя героя: ");
+            Console.Write(resourceManager.GetString("EnterHeroName", cultura));
             var name = Console.ReadLine();
 
             var heroContr2 = new HeroController(name);
@@ -21,7 +26,7 @@ namespace GameOfRPG.CMD
 
             if(heroContr2.IsNewUser)
             {
-                Console.Write("Введите Пол: ");
+                Console.Write(Languages.Message_ru_ru.EnterHeroGender);
                 var gender = Console.ReadLine();
 
                 var age = parseHelper.ParseInt("Возраст");
@@ -29,12 +34,12 @@ namespace GameOfRPG.CMD
                 var Height = parseHelper.ParseDouble("Рост");
 
                 Console.WriteLine("----------------------------");
-                Console.Write("Введите Оружие: ");
+                Console.Write(Languages.Message_ru_ru.EnterWeaponName);
                 var nameWeapon = Console.ReadLine();
 
                 var dm = parseHelper.ParseInt("Урон");
 
-                Console.Write("Введите Класс: ");
+                Console.Write(Languages.Message_ru_ru.EnterClassHeroName);
                 var nameClass = Console.ReadLine();
 
                 var HP = parseHelper.ParseInt("HP");
